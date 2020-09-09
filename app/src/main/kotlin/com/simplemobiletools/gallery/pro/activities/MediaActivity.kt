@@ -9,9 +9,8 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.view.Menu
-import android.view.MenuItem
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import androidx.appcompat.widget.SearchView
@@ -45,6 +44,7 @@ import com.simplemobiletools.gallery.pro.interfaces.MediaOperationsListener
 import com.simplemobiletools.gallery.pro.models.Medium
 import com.simplemobiletools.gallery.pro.models.ThumbnailItem
 import com.simplemobiletools.gallery.pro.models.ThumbnailSection
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_media.*
 import java.io.File
 import java.io.IOException
@@ -939,5 +939,60 @@ class MediaActivity : SimpleActivity(), MediaOperationsListener {
             setResult(Activity.RESULT_OK, this)
         }
         finish()
+    }
+
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        if(event.getAction() != KeyEvent.ACTION_UP)
+            return super.dispatchKeyEvent(event);
+
+        when(event.unicodeChar) {
+            119 -> {
+                var position = (media_grid.layoutManager as GridLayoutManager?)!!.findFirstVisibleItemPosition()
+                media_grid.findViewHolderForAdapterPosition(position)?.itemView?.performClick()
+            }
+            101 -> {
+                var position = (media_grid.layoutManager as GridLayoutManager?)!!.findFirstVisibleItemPosition()
+                position += 1
+                media_grid.findViewHolderForAdapterPosition(position)?.itemView?.performClick()
+            }
+            114 -> {
+                var position = (media_grid.layoutManager as GridLayoutManager?)!!.findFirstVisibleItemPosition()
+                position += 2
+                media_grid.findViewHolderForAdapterPosition(position)?.itemView?.performClick()
+            }
+            115 -> {
+                var position = (media_grid.layoutManager as GridLayoutManager?)!!.findFirstVisibleItemPosition()
+                position += 3
+                media_grid.findViewHolderForAdapterPosition(position)?.itemView?.performClick()
+            }
+            100 -> {
+                var position = (media_grid.layoutManager as GridLayoutManager?)!!.findFirstVisibleItemPosition()
+                position += 4
+                media_grid.findViewHolderForAdapterPosition(position)?.itemView?.performClick()
+            }
+            102 -> {
+                var position = (media_grid.layoutManager as GridLayoutManager?)!!.findFirstVisibleItemPosition()
+                position += 5
+                media_grid.findViewHolderForAdapterPosition(position)?.itemView?.performClick()
+            }
+            122 -> {
+                var position = (media_grid.layoutManager as GridLayoutManager?)!!.findFirstVisibleItemPosition()
+                position += 6
+                media_grid.findViewHolderForAdapterPosition(position)?.itemView?.performClick()
+            }
+            120 -> {
+                var position = (media_grid.layoutManager as GridLayoutManager?)!!.findFirstVisibleItemPosition()
+                position += 7
+                media_grid.findViewHolderForAdapterPosition(position)?.itemView?.performClick()
+            }
+            99 -> {
+                var position = (media_grid.layoutManager as GridLayoutManager?)!!.findFirstVisibleItemPosition()
+                position += 8
+                media_grid.findViewHolderForAdapterPosition(position)?.itemView?.performClick()
+            }
+        }
+
+        Log.i("mediaactivity", java.lang.String.valueOf(event.keyCode) + " unicode char: " + event)
+        return super.dispatchKeyEvent(event)
     }
 }

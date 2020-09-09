@@ -6,9 +6,9 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.util.Log
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import com.simplemobiletools.commons.dialogs.PropertiesDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.IS_FROM_GALLERY
@@ -351,4 +351,12 @@ open class PhotoVideoActivity : SimpleActivity(), ViewPagerFragment.FragmentList
     override fun launchViewVideoIntent(path: String) {}
 
     override fun isSlideShowActive() = false
+
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        if(event.getAction() != KeyEvent.ACTION_UP)
+            return super.dispatchKeyEvent(event);
+
+        Log.i("photovideoactivity", java.lang.String.valueOf(event.keyCode) + " unicode char: " + event.unicodeChar)
+        return super.dispatchKeyEvent(event)
+    }
 }

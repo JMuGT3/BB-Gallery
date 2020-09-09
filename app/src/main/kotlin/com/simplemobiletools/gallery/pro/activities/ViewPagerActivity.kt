@@ -22,10 +22,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore.Images
 import android.text.Html
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.WindowManager
+import android.util.Log
+import android.view.*
 import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import androidx.print.PrintHelper
@@ -63,7 +61,7 @@ import java.io.File
 import java.io.OutputStream
 import java.util.*
 
-class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, ViewPagerFragment.FragmentListener {
+class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, ViewPagerFragment.FragmentListener, View.OnGenericMotionListener {
     private val REQUEST_VIEW_VIDEO = 1
 
     private var mPath = ""
@@ -86,6 +84,13 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
     private var mFavoritePaths = ArrayList<String>()
     private var mIgnoredPaths = ArrayList<String>()
 
+    private var lastKeyCode = 0
+    private var lastX = 0f
+    private var lastY = 0f
+    private var horizontalThreshold = 200
+    private var verticalThreshold = 100
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_medium)
@@ -103,6 +108,7 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
             }
         }
 
+        fragment_holder.setOnGenericMotionListener(this)
         initFavorites()
     }
 
@@ -1304,5 +1310,69 @@ class ViewPagerActivity : SimpleActivity(), ViewPager.OnPageChangeListener, View
         if (state == ViewPager.SCROLL_STATE_IDLE && getCurrentMedium() != null) {
             checkOrientation()
         }
+    }
+
+    override fun onGenericMotion(view: View?, event: MotionEvent?): Boolean {
+        if (event == null)
+            return true
+
+
+       // Log.i("gesture", event?.action.toString() + " @ " + event?.x.toString() + "/" + event?.y.toString())
+
+        if(event.action == MotionEvent.ACTION_DOWN) {
+            lastX = event.x;
+            lastY = event.y
+        }
+
+        if(event.action == MotionEvent.ACTION_MOVE) {
+
+            /*
+            //swipe to right
+            if(event.x > lastX + horizontalThreshold) {
+                view_pager.setCurrentItem(view_pager.currentItem - 1, true)
+                lastX = event.x;
+                lastY = event.y
+            }
+
+            //siwpe to left
+            if(event.x < lastX - horizontalThreshold) {
+                view_pager.setCurrentItem(view_pager.currentItem + 1, true)
+                lastX = event.x;
+                lastY = event.y
+            }
+
+            //swipe up
+            if(event.y < lastY - verticalThreshold) {
+                bottom_share.performClick()
+            }
+
+            //swipe down
+            if(event.y > lastY + verticalThreshold) {
+            }*/
+        }
+
+        view_pager.dispatchTouchEvent(event)
+
+        return true;
+    }
+
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        if(event.getAction() != KeyEvent.ACTION_UP)
+            return super.dispatchKeyEvent(event);
+
+        Log.i("key up", java.lang.String.valueOf(event.keyCode) + " unicode char: " + event.unicodeChar)
+
+        when(event.unicodeChar) {
+            115 -> bottom_share.performClick()
+            100 -> if(lastKeyCode == 100) bottom_delete.performClick()
+            105 -> bottom_properties.performClick()
+            114 -> if(lastKeyCode == 114) rotateBy(-90)
+            108 -> if(lastKeyCode == 114) rotateBy(90)
+            32 -> view_pager.setCurrentItem(view_pager.currentItem + 1, true)
+        }
+
+
+        lastKeyCode = event.unicodeChar;
+        return super.dispatchKeyEvent(event)
     }
 }

@@ -11,6 +11,8 @@ import android.os.Handler
 import android.provider.MediaStore
 import android.provider.MediaStore.Images
 import android.provider.MediaStore.Video
+import android.util.Log
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
@@ -19,6 +21,8 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.CreateNewFolderDialog
@@ -86,6 +90,8 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
     private var mStoredShowMediaCount = true
     private var mStoredTextColor = 0
     private var mStoredPrimaryColor = 0
+
+    private var lastKey = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -155,11 +161,6 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
             }
         }
 
-        // notify some users about the Dialer, SMS Messenger and Voice Recorder apps
-        if (!config.wasMessengerRecorderShown && config.appRunCount > 35) {
-            NewAppsIconsDialog(this)
-            config.wasMessengerRecorderShown = true
-        }
     }
 
     override fun onStart() {
@@ -1376,5 +1377,62 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
             add(Release(295, R.string.release_295))
             checkWhatsNew(this, BuildConfig.VERSION_CODE)
         }
+    }
+
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        if(event.getAction() != KeyEvent.ACTION_UP)
+            return super.dispatchKeyEvent(event);
+
+        Log.i("mainactivity", java.lang.String.valueOf(event.keyCode) + " unicode char: " + event.unicodeChar)
+
+        when(event.unicodeChar) {
+            119 -> {
+                var position = (directories_grid.layoutManager as GridLayoutManager?)!!.findFirstVisibleItemPosition()
+                directories_grid.findViewHolderForAdapterPosition(position)?.itemView?.performClick()
+            }
+            101 -> {
+                var position = (directories_grid.layoutManager as GridLayoutManager?)!!.findFirstVisibleItemPosition()
+                position += 1
+                directories_grid.findViewHolderForAdapterPosition(position)?.itemView?.performClick()
+            }
+            114 -> {
+                var position = (directories_grid.layoutManager as GridLayoutManager?)!!.findFirstVisibleItemPosition()
+                position += 2
+                directories_grid.findViewHolderForAdapterPosition(position)?.itemView?.performClick()
+            }
+            115 -> {
+                var position = (directories_grid.layoutManager as GridLayoutManager?)!!.findFirstVisibleItemPosition()
+                position += 3
+                directories_grid.findViewHolderForAdapterPosition(position)?.itemView?.performClick()
+            }
+            100 -> {
+                var position = (directories_grid.layoutManager as GridLayoutManager?)!!.findFirstVisibleItemPosition()
+                position += 4
+                directories_grid.findViewHolderForAdapterPosition(position)?.itemView?.performClick()
+            }
+            102 -> {
+                var position = (directories_grid.layoutManager as GridLayoutManager?)!!.findFirstVisibleItemPosition()
+                position += 5
+                directories_grid.findViewHolderForAdapterPosition(position)?.itemView?.performClick()
+            }
+            122 -> {
+                var position = (directories_grid.layoutManager as GridLayoutManager?)!!.findFirstVisibleItemPosition()
+                position += 6
+                directories_grid.findViewHolderForAdapterPosition(position)?.itemView?.performClick()
+            }
+            120 -> {
+                var position = (directories_grid.layoutManager as GridLayoutManager?)!!.findFirstVisibleItemPosition()
+                position += 7
+                directories_grid.findViewHolderForAdapterPosition(position)?.itemView?.performClick()
+            }
+            99 -> {
+                var position = (directories_grid.layoutManager as GridLayoutManager?)!!.findFirstVisibleItemPosition()
+                position += 8
+                directories_grid.findViewHolderForAdapterPosition(position)?.itemView?.performClick()
+            }
+        }
+
+        lastKey = event.unicodeChar
+        return super.dispatchKeyEvent(event)
     }
 }

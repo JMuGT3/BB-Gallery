@@ -2,7 +2,9 @@ package com.simplemobiletools.gallery.pro.extensions
 
 import android.annotation.TargetApi
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.ContentProviderOperation
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -80,30 +82,18 @@ fun Activity.launchCamera() {
 }
 
 fun SimpleActivity.launchAbout() {
-    val licenses = LICENSE_GLIDE or LICENSE_CROPPER or LICENSE_RTL or LICENSE_SUBSAMPLING or LICENSE_PATTERN or LICENSE_REPRINT or LICENSE_GIF_DRAWABLE or
-            LICENSE_PICASSO or LICENSE_EXOPLAYER or LICENSE_PANORAMA_VIEW or LICENSE_SANSELAN or LICENSE_FILTERS or LICENSE_GESTURE_VIEWS
+    val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+    builder.setTitle("BB Gallery")
+    builder.setMessage("Simple gallery app with Blackberry optimizations\nOptimized for hardware keyboard use\n\nBased on Simple-Gallery by SimpleMobileTools - https://www.simplemobiletools.com")
+    builder.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, id ->
+        // You don't have to do anything here if you just
+        // want it dismissed when clicked
+    })
 
-    val faqItems = arrayListOf(
-        FAQItem(R.string.faq_5_title_commons, R.string.faq_5_text_commons),
-        FAQItem(R.string.faq_1_title, R.string.faq_1_text),
-        FAQItem(R.string.faq_2_title, R.string.faq_2_text),
-        FAQItem(R.string.faq_3_title, R.string.faq_3_text),
-        FAQItem(R.string.faq_4_title, R.string.faq_4_text),
-        FAQItem(R.string.faq_5_title, R.string.faq_5_text),
-        FAQItem(R.string.faq_6_title, R.string.faq_6_text),
-        FAQItem(R.string.faq_7_title, R.string.faq_7_text),
-        FAQItem(R.string.faq_8_title, R.string.faq_8_text),
-        FAQItem(R.string.faq_10_title, R.string.faq_10_text),
-        FAQItem(R.string.faq_11_title, R.string.faq_11_text),
-        FAQItem(R.string.faq_12_title, R.string.faq_12_text),
-        FAQItem(R.string.faq_13_title, R.string.faq_13_text),
-        FAQItem(R.string.faq_14_title, R.string.faq_14_text),
-        FAQItem(R.string.faq_15_title, R.string.faq_15_text),
-        FAQItem(R.string.faq_2_title_commons, R.string.faq_2_text_commons),
-        FAQItem(R.string.faq_6_title_commons, R.string.faq_6_text_commons),
-        FAQItem(R.string.faq_7_title_commons, R.string.faq_7_text_commons))
+    // Create the AlertDialog object and return it
 
-    startAboutActivity(R.string.app_name, licenses, BuildConfig.VERSION_NAME, faqItems, true)
+    // Create the AlertDialog object and return it
+    builder.show()
 }
 
 fun AppCompatActivity.showSystemUI(toggleActionBarVisibility: Boolean) {
