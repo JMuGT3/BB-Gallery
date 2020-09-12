@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/media_item_holder"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_margin="1dp"
     android:clickable="true"
     android:focusable="true"
     android:padding="1px">
@@ -12,7 +12,7 @@
     <com.simplemobiletools.gallery.pro.views.MySquareImageView
         android:id="@+id/medium_thumbnail"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
     <ImageView
         android:id="@+id/play_outline"
@@ -22,7 +22,7 @@
         android:layout_alignParentTop="true"
         android:layout_margin="@dimen/small_margin"
         android:src="@drawable/ic_play_outline_vector"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/file_type"
@@ -55,7 +55,7 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/normal_text_size"
         android:visibility="gone"
-        tools:text="02:34"/>
+        tools:text="02:34" />
 
     <ImageView
         android:id="@+id/medium_check"
@@ -69,7 +69,7 @@
         android:contentDescription="@null"
         android:padding="@dimen/tiny_margin"
         android:src="@drawable/ic_check_vector"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/medium_name"
@@ -89,6 +89,6 @@
         android:shadowRadius="4"
         android:textColor="@android:color/white"
         android:textSize="@dimen/smaller_text_size"
-        tools:text="My photo"/>
+        tools:text="My photo" />
 
 </RelativeLayout>
